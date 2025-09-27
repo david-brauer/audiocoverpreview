@@ -1,0 +1,32 @@
+{
+	"name": "nextcloud/audiocoverpreview",
+	"description": "Generate previews for more audio formats using ffmpeg to be shown in the nextcloud file list view",
+	"authors": [
+		{
+			"name": "David Brauer"
+		}
+	],
+	"autoload": {
+		"psr-4": {
+			"OCA\\AudioCoverPreview\\": "lib/"
+		}
+	},
+	"require": {
+		"bamarni/composer-bin-plugin": "^1.8",
+		"php": "^8.4"
+	},
+	"require-dev": {
+		"nextcloud/ocp": "dev-stable33",
+		"roave/security-advisories": "dev-latest"
+	},
+	"config": {
+		"allow-plugins": {
+			"bamarni/composer-bin-plugin": true
+		},
+		"optimize-autoloader": true,
+		"sort-packages": true,
+		"platform": {
+			"php": "8.4"
+		}
+	}
+}

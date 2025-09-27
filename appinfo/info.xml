@@ -1,0 +1,17 @@
+<?xml version="1.0"?>
+<info xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	  xsi:noNamespaceSchemaLocation="https://apps.nextcloud.com/schema/apps/info.xsd">
+	<id>audiocoverpreview</id>
+	<name>Audio Cover Preview Formats</name>
+	<summary>Generate previews for more audio formats</summary>
+	<description>Generate previews for more audio formats using ffmpeg to be shown in the nextcloud list view</description>
+	<version>0.8.0</version>
+	<author homepage="">David Brauer</author>
+	<namespace>AudioCoverPreview</namespace>
+	<category>multimedia</category>
+	<dependencies>
+		<nextcloud min-version="30" max-version="32"/>
+	</dependencies>
+	<navigations>
+	</navigations>
+</info>

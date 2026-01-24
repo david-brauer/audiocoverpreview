@@ -1,5 +1,6 @@
 # Audio File Preview Generation for Nextcloud
 
+![Screenshot](appinfo/screenshot.png)
 A very basic app to generate preview images of album covers for multiple music formats that Nextcloud currently doesn't support previews for.
 
 > [!WARNING]

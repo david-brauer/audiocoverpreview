@@ -27,7 +27,19 @@ Also the app tests if the binary exists using which. You should make sure this p
 
 Imagemagick is optional. In my case ffmpeg is generating wrong markers into the output. PHP gd will refuse tho read the files in that case. To fix it currently I use imagemagick to convert the file into jpeg and fix the wrong marker. If you don't have imagemagick installed these previews won't be available.
 
+Since 0.10: Imagemagick can also be used to re-encode the ffmpeg output to another format. For now jpg,png,webp are supported options.
+The list is limited for now since both nextcloud and php-gd have to support the specified format. It might be expanded with more formats in later versions.
+The format can be set with the following command:
+
+```
+occ config:app:set --value=<format> audiocoverpreview image_format
+```
+
 ## Issues
+
+Since 0.10 the app comes with a settings page that dispalys some infos about the detected ffmpeg and imagemagick configuration.
+If you have an issue you should check that first. It can also be helpful to include some of that information in your issue
+description for easier troubleshooting.
 
 If you have a problem you can create an issue. To make it easier for others to help you out post the following info:
  1. If you see a log entry, post the full entry.

@@ -42,11 +42,11 @@ abstract class AbstractAudioPreview extends ProviderV2 {
     {
         $absPath = $this->getLocalFile($file);
         $extension = '.jpg'; // This is fixed by design. ffmpeg seems to only support jpg for images in my testing
-        $tmpFilePathNoExt='/tmp/'.md5($file->getName());
+        $tmpFilePathNoExt='/tmp/'.md5($file->getId().time());
         $tmpFilePath = $tmpFilePathNoExt.$extension;
         $error = shell_exec(
             $this->ffmpegCapability->getBinary().
-            " -i ".escapeshellarg($absPath). " -an -c:v copy -frames:v 1 -update true ".$tmpFilePath." 2>&1"
+            " -y -i ".escapeshellarg($absPath). " -an -c:v copy -frames:v 1 -update true ".$tmpFilePath." 2>&1"
             );
 
         if(!file_exists($tmpFilePath)) {
@@ -65,6 +65,7 @@ abstract class AbstractAudioPreview extends ProviderV2 {
             $this->imConverter->setTargetExtension($imExtension);
             if($this->convertWithImIfPossible($tmpFilePathNoExt)){
                 $image = $this->createImageFromPath($tmpFilePathNoExt.'.'.$imExtension,$maxX,$maxY);
+                unlink($tmpFilePath);
                 return $image;
             };
         }
@@ -75,11 +76,13 @@ abstract class AbstractAudioPreview extends ProviderV2 {
         // by converting it to the same format but with a fixed marker
         if($image === null){
             if(!$this->convertWithImIfPossible($tmpFilePathNoExt)){
+                unlink($tmpFilePath);
                 return null;
             }
             //Try again after imagemagick conversion
             $image = $this->createImageFromPath($tmpFilePathNoExt.'.'.$imExtension,$maxX,$maxY);
         }
+        unlink($tmpFilePath);
         return $image;
     }
 

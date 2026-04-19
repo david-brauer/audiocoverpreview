@@ -5,7 +5,7 @@
 	<name>Audio Cover Preview Formats</name>
 	<summary>Generate previews for more audio formats</summary>
 	<description>Generate previews for more audio formats using ffmpeg to be shown in the nextcloud list view</description>
-	<version>0.10.0</version>
+	<version>0.10.1</version>
 	<licence>AGPL-3.0-or-later</licence>
 	<author homepage="http://example.com">David Brauer</author>
 	<namespace>AudioCoverPreview</namespace>

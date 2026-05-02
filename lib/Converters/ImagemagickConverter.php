@@ -10,6 +10,8 @@ class ImagemagickConverter
     private string $sourceExtension='jpg';
     private string $targetExtension='jpg';
 
+    private bool $skipChecks = false;
+
     public static array $supportedFormats =[
         'jpg',
         'jpeg',
@@ -20,25 +22,27 @@ class ImagemagickConverter
     protected Imagemagick7Capability $im7Capability;
     protected Imagemagick6Capability $im6Capability;
 
-    public function __construct()
+    public function __construct(bool $skipChecks = false)
     {
-        $this->im7Capability = new Imagemagick7Capability();
-        $this->im6Capability = new Imagemagick6Capability();
+        $this->skipChecks = $skipChecks;
+        $this->im7Capability = new Imagemagick7Capability($skipChecks);
+        $this->im6Capability = new Imagemagick6Capability($skipChecks);
     }
 
     public function convertWithImagemagick(AbstractImageMagickCapability $imCapability, string $filepath): bool
     {
-        //Check if the target image format is supported
-        if(!in_array($this->targetExtension, self::$supportedFormats)){
-            return false;
-        }
+        if(!$this->skipChecks){
+            //Check if the target image format is supported
+            if(!$this->isFormatSupported($this->targetExtension)){
+                return false;
+            }
 
+            if(!$this->isConversionPossible($imCapability)){
+                return false;
+            }
+        }
         $fullSourcePath=$filepath.'.'.$this->sourceExtension;
         $fullTargetPath=$filepath.'.'.$this->targetExtension;
-
-        if(!$this->isConversionPossible($imCapability)){
-            return false;
-        }
         shell_exec($imCapability->getBinary()." ".escapeshellarg($fullSourcePath). " ".escapeshellarg($fullTargetPath));
         return true;
     }
@@ -55,6 +59,19 @@ class ImagemagickConverter
         }
         // No IM detected
         return null;
+    }
+
+    public function isFormatSupported(string $format):bool
+    {
+        if($this->skipChecks){
+            return true;
+        }
+
+        if(!in_array($format, self::$supportedFormats)){
+            return false;
+        }
+
+        return true;
     }
 
     private function isConversionPossible(AbstractImageMagickCapability $imCapability):bool

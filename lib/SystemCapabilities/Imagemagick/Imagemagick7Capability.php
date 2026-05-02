@@ -5,12 +5,15 @@ use OCA\AudioCoverPreview\SystemCapabilities\Imagemagick\AbstractImageMagickCapa
 
 class Imagemagick7Capability extends AbstractImageMagickCapability {
 
-    public function __construct()
+    public function __construct(bool $skipChecks = false)
     {
         $this->binary = 'magick';
+        $this->skipChecks = $skipChecks;
         $this->isCapable = $this->checkCapability();
-        $this->initSupportedFormats();
-
+        
+        if(!$skipChecks) {
+            $this->initSupportedFormats();
+        }
     }
 
     public function getVersionString():string
@@ -27,6 +30,7 @@ class Imagemagick7Capability extends AbstractImageMagickCapability {
 
     protected function checkCapability():bool
     {
+        // this cannot be skipped since we need to know if we have IM6 or 7 at some point
         return $this->binaryExists($this->binary);
     }
 

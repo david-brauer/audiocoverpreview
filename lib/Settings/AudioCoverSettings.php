@@ -22,8 +22,11 @@ class AudioCoverSettings implements ISettings {
             $imageFormatSetting ='jpg';
         }
 
+        $skipChecks = $this->config->getAppValueBool('skip_checks', false);
+
         $parameters = [
-            'imageFormat' => $imageFormatSetting
+            'imageFormat' => $imageFormatSetting,
+            'skipChecks' => $skipChecks
         ];
         return new TemplateResponse('audiocoverpreview', 'Settings/Audiocover', $parameters,'');
     }

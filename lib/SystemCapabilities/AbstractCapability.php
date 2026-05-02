@@ -4,6 +4,7 @@ namespace OCA\AudioCoverPreview\SystemCapabilities;
 abstract class AbstractCapability {
     protected $binary = '';
     protected $isCapable= false;
+    protected bool $skipChecks = false;
     protected abstract function checkCapability():bool;
     public abstract function getVersionString():string;
 

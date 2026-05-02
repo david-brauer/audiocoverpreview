@@ -35,6 +35,17 @@ The format can be set with the following command:
 occ config:app:set --value=<format> audiocoverpreview image_format
 ```
 
+## Advanced Usage
+Since 0.11:
+To get a bit more performance by not checking the envoirnment for every generation/preview fetching a news setting skip_checks was introduced. This disables checking eg. for ffmpeg and imagemagick formats. If the extension is set up correctly and works
+you might consider turning it on. Keep in mind that those checks will be off until you reset the setting. The admin settings
+page is not affected by the change and will still run the checks for giving out the correct status.
+The setting can be set by the following command:
+
+```
+occ config:app:set --value=<true|false> audiocoverpreview skip_checks
+```
+
 ## Issues
 
 Since 0.10 the app comes with a settings page that dispalys some infos about the detected ffmpeg and imagemagick configuration.
@@ -45,6 +56,7 @@ If you have a problem you can create an issue. To make it easier for others to h
  1. If you see a log entry, post the full entry.
  2. Write what System you are using (OS, ffmpeg Version) as this can be the issue
  3. Describe how excactly the issue can be reporduced
+
 
 ## Some answers to questions you might have
 

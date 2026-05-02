@@ -15,22 +15,29 @@ abstract class AbstractAudioPreview extends ProviderV2 {
 
     protected LoggerInterface $logger;
     protected IAppConfig $config;
-    protected string $appName;
+    
+    // Skips checks for ffmpeg and imagemagick. Should only be set if you are sure you have everything installed and working 
+    private bool $skipChecks = false;
 
     protected FfmpegCapability $ffmpegCapability;
     protected ImagemagickConverter $imConverter;
 
 
-    public function __construct(LoggerInterface $logger, IAppConfig $config, string $appName)
+    public function __construct(LoggerInterface $logger, IAppConfig $config)
     {
         $this->logger = $logger;
         $this->config = $config;
-        $this->appName = $appName;
-        $this->ffmpegCapability = new FfmpegCapability();
-        $this->imConverter = new ImagemagickConverter();
+        $this->skipChecks = $config->getAppValueBool('skip_checks', false);
+
+        $this->ffmpegCapability = new FfmpegCapability($this->skipChecks);
+        $this->imConverter = new ImagemagickConverter($this->skipChecks);
     }
     public function isAvailable(FileInfo $file): bool
     {
+        if($this->skipChecks === true) {
+            return true;
+        }
+
         if($this->ffmpegCapability->hasCapability()){
             return true;
         }
@@ -57,7 +64,7 @@ abstract class AbstractAudioPreview extends ProviderV2 {
 
         // Get format and try to re-encode if it is not jpg
         $imExtension = $this->config->getAppValueString('image_format', 'jpg');
-        if(!in_array($imExtension, ImagemagickConverter::$supportedFormats)){
+        if(!$this->imConverter->isFormatSupported($imExtension)){
             $imExtension ='jpg';
         }
 

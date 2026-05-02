@@ -31,6 +31,10 @@ $capabilities =[
       }
       echo getImagemagicSection($capabilities,$imageFormat);
     ?>
+    <h2>Advanced Usage</h2>
+    <?php
+     echo getSkipChecksSection($skipChecks);
+    ?>
 
 </div>
 
@@ -125,6 +129,23 @@ $capabilities =[
 
     // The one we need is supported. Still show this with warning status
     return renderBox($formatSupport->getName().' has no read or write support. It might work but is not optimal','#FFEEC5');
+ }
+
+  function getSkipChecksSection(bool $skipChecks){
+   $html = '<p>If you have set up the dependencies correctly and everything is working.
+               You may consider setting this setting to true. This settings skips most environment checks for ffmpeg and imagemagick.
+               This will disable the checks as long as the setting is set. The main reason for this is to get a bit more performance by
+               not checking everything with every image that is fetched for isAvailable() and also every generation.
+            </p>
+            <br/>
+            <p>Your current skipChecks setting is: <strong>'.($skipChecks ?'true':'false'). '</strong>
+            </p>
+            <br/>
+            </p>
+               The command for changing that is below (replace "skipChecks" with true to enable or false to disable<br/>
+              <code>occ config:app:set --value=skipChecks audiocoverpreview skip_checks</code>
+            </p>';
+   return $html;         
  }
 
  function renderBox(string $message, string $color):string

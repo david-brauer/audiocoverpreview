@@ -3,11 +3,10 @@
 namespace OCA\AudioCoverPreview\PreviewProviders;
 
 
-class FLAC extends AbstractAudioPreview 
+class FLAC extends AbstractAudioPreview
 {
-    public function getMimeType(): string
-    {
-        return "/audio\/flac)/";
-    }
-
+	public function getMimeType(): string
+	{
+		return "/audio\/flac)/";
+	}
 }

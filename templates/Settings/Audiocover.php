@@ -16,7 +16,7 @@ $capabilities =[
     </p>
     <h3>ffmpeg</h3>
     <p>ffmpeg must be installed and usable by the app. If you get an error here the app probably will not work.</p>
-    
+
     <?php echo getFfmpegSection($capabilities['ffmpeg']);?>
 
     <h3>Imagemagick</h3>
@@ -27,8 +27,6 @@ $capabilities =[
     </p>
 
     <?php
-      if($capabilities['im7']->hasCapability() === true || $capabilities['im6']->hasCapability() === true){
-      }
       echo getImagemagicSection($capabilities,$imageFormat);
     ?>
     <h2>Advanced Usage</h2>
@@ -60,7 +58,7 @@ $capabilities =[
   return renderBox('imagemagick is not installed or detected. This might cause errors on some album covers','#FFEEC5');
  }
 
- function getImageMagickFormatSupport(AbstractImageMagickCapability $capability,string $currentFormat)
+ function getImageMagickFormatSupport(AbstractImageMagickCapability $capability,string $currentFormat) :string
  {
           $html= '
           <h3>Supported Imagemagick Formats</h3>
@@ -73,11 +71,11 @@ $capabilities =[
           <p> Your current re-encode format is: <strong>'.$currentFormat. '</strong>
           </p>
           <br/>
-          <p>    
+          <p>
               The command for changing that is below (replace "format" with one of the supported formats below:)<br/>
               <code>occ config:app:set --value="format" audiocoverpreview image_format</code>
           </p>
-          <p><strong> After changing this you need to reset generated previews to force re-generation in the new format</strong> 
+          <p><strong> After changing this you need to reset generated previews to force re-generation in the new format</strong>
           ';
         $html.= '
           <h4>JPG (Default format)</h4>
@@ -99,7 +97,7 @@ $capabilities =[
  }
 
  function getSpecificFormatCapabilities(
-  string  $format, 
+  string  $format,
   AbstractImageMagickCapability $capability,
   bool $needsRead = false,
   bool $needsWrite = false
@@ -131,28 +129,28 @@ $capabilities =[
     return renderBox($formatSupport->getName().' has no read or write support. It might work but is not optimal','#FFEEC5');
  }
 
-  function getSkipChecksSection(bool $skipChecks){
-   $html = '<p>If you have set up the dependencies correctly and everything is working.
-               You may consider setting this setting to true. This settings skips most environment checks for ffmpeg and imagemagick.
-               This will disable the checks as long as the setting is set. The main reason for this is to get a bit more performance by
-               not checking everything with every image that is fetched for isAvailable() and also every generation.
-            </p>
-            <br/>
-            <p>Your current skipChecks setting is: <strong>'.($skipChecks ?'true':'false'). '</strong>
-            </p>
-            <br/>
-            </p>
-               The command for changing that is below (replace "skipChecks" with true to enable or false to disable<br/>
-              <code>occ config:app:set --value=skipChecks audiocoverpreview skip_checks</code>
-            </p>';
-   return $html;         
+  function getSkipChecksSection(bool $skipChecks) :string
+  {
+	  return '<p>If you have set up the dependencies correctly and everything is working.
+				  You may consider setting this setting to true. This settings skips most environment checks for ffmpeg and imagemagick.
+				  This will disable the checks as long as the setting is set. The main reason for this is to get a bit more performance by
+				  not checking everything with every image that is fetched for isAvailable() and also every generation.
+			   </p>
+			   <br/>
+			   <p>Your current skipChecks setting is: <strong>'.($skipChecks ?'true':'false'). '</strong>
+			   </p>
+			   <br/>
+			   </p>
+				  The command for changing that is below (replace "skipChecks" with true to enable or false to disable<br/>
+				 <code>occ config:app:set --value=skipChecks audiocoverpreview skip_checks</code>
+			   </p>';
  }
 
  function renderBox(string $message, string $color):string
  {
   return '<div style="background:'.$color.';border-radius:5px;margin-top:5px;margin-left:5px">
     <div style="padding: 0 5px 0 5px;font-weight: bold;">'.$message.
-      '</div>      
+      '</div>
     </div><br/>';
  }
  ?>

@@ -5,7 +5,7 @@
 	<name>Audio Cover Preview Formats</name>
 	<summary>Generate previews for more audio formats</summary>
 	<description>Generate previews for more audio formats using ffmpeg to be shown in the nextcloud list view</description>
-	<version>0.12.1</version>
+	<version>0.13.0</version>
 	<licence>AGPL-3.0-or-later</licence>
 	<author homepage="http://example.com">David Brauer</author>
 	<namespace>AudioCoverPreview</namespace>
@@ -13,7 +13,7 @@
 	<bugs>https://github.com/david-brauer/audiocoverpreview/issues</bugs>
 	<screenshot>https://raw.githubusercontent.com/david-brauer/audiocoverpreview/main/appinfo/screenshot.png</screenshot>
 	<dependencies>
-		<nextcloud min-version="33" max-version="34"/>
+		<nextcloud min-version="34" max-version="35"/>
 	</dependencies>
 	<settings>
     	<admin>OCA\AudioCoverPreview\Settings\AudioCoverSettings</admin>

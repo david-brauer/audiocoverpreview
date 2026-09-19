@@ -4,8 +4,25 @@
 	<id>audiocoverpreview</id>
 	<name>Audio Cover Preview Formats</name>
 	<summary>Generate previews for more audio formats</summary>
-	<description>Generate previews for more audio formats using ffmpeg to be shown in the nextcloud list view</description>
-	<version>0.13.0</version>
+	<description><![CDATA[
+	This app generates preview images for additional audio formats from the embedded album cover. 
+	These previois will be shown in the nextcloud list view to make browsing your music library easier.
+	The geration is done with ffmpeg which is required for the app to work.
+	Also imagemagick is recommended for best results and required for some optional settings.
+
+	The App has not been extensively tested. Usage is at your own risk. It is recommended to backup your DB and preview files before installing the app.
+
+	Currently the following formats are supported:
+	
+	- M4A
+	- OPUS
+	- OGG
+	- FLAC
+	- MP3 (the nextcloud default provider seems to have issues with my files sometimes)
+	
+	More information is avaliable on GitHub. 
+	]]></description>
+	<version>0.13.1</version>
 	<licence>AGPL-3.0-or-later</licence>
 	<author homepage="http://example.com">David Brauer</author>
 	<namespace>AudioCoverPreview</namespace>

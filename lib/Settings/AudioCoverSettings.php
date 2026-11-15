@@ -2,46 +2,28 @@
 
 namespace OCA\AudioCoverPreview\Settings;
 
-use OCA\AudioCoverPreview\Converters\ImagemagickConverter;
+use OCA\AudioCoverPreview\AppInfo\Application;
 use OCP\AppFramework\Http\TemplateResponse;
-use OCP\AppFramework\Services\IAppConfig;
-use OCP\IL10N;
 use OCP\Settings\ISettings;
+use OCP\Util;
 
 class AudioCoverSettings implements ISettings
 {
-	private IL10N $l;
-	private IAppConfig $config;
+    public function getForm(): TemplateResponse
+    {
+        Util::addScript(Application::APP_ID, Application::APP_ID . '-main');
+        Util::addStyle(Application::APP_ID, Application::APP_ID . '-main');
 
-	public function __construct(IAppConfig $config, IL10N $l)
-	{
-		$this->config = $config;
-		$this->l = $l;
-	}
+        return new TemplateResponse('audiocoverpreview', 'Settings/Audiocover');
+    }
 
-	public function getForm(): TemplateResponse
-	{
-		$imageFormatSetting = $this->config->getAppValueString('image_format', 'jpg');
-		if (!in_array($imageFormatSetting, ImagemagickConverter::$supportedFormats)) {
-			$imageFormatSetting = 'jpg';
-		}
+    public function getSection(): string
+    {
+        return 'audiosettings';
+    }
 
-		$skipChecks = $this->config->getAppValueBool('skip_checks');
-
-		$parameters = [
-			'imageFormat' => $imageFormatSetting,
-			'skipChecks' => $skipChecks
-		];
-		return new TemplateResponse('audiocoverpreview', 'Settings/Audiocover', $parameters, '');
-	}
-
-	public function getSection(): string
-	{
-		return 'audiosettings';
-	}
-
-	public function getPriority(): int
-	{
-		return 10;
-	}
+    public function getPriority(): int
+    {
+        return 10;
+    }
 }
